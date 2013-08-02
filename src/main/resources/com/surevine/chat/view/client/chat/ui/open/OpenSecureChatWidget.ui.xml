@@ -1,0 +1,24 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:s="urn:import:com.surevine.chat.view.client.security.labelchooser"
+	xmlns:c="urn:import:com.surevine.chat.view.client.security.labelchooser.caveats"
+	xmlns:security="urn:import:com.surevine.chat.view.client.security.ui">
+	<ui:style>
+		
+	</ui:style>
+	<g:ScrollPanel ui:field="scroll" styleName="scroll">
+		<g:HTMLPanel>
+			<div class="form hablar-OpenChatWidget">
+				<h2>
+					<g:Label ui:field='title' />
+				</h2>
+				<s:SecurityLabelChooserWidget ui:field="securityLabelChooserWidget"></s:SecurityLabelChooserWidget>
+				<div class="actions">
+					<g:Button ui:field="accept">Accept</g:Button>
+					<g:Button ui:field="cancel">Cancel</g:Button>
+				</div>
+			</div>
+		</g:HTMLPanel>
+	</g:ScrollPanel>
+</ui:UiBinder>

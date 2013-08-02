@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:s="urn:import:com.surevine.chat.view.client.security.labelchooser"
+	xmlns:c="urn:import:com.surevine.chat.view.client.security.labelchooser.caveats"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:security="urn:import:com.surevine.chat.view.client.security.ui">
+	<ui:style>
+		
+	</ui:style>
+	<g:HTMLPanel>
+		<div class="hablar-SecurityLabelChooserWidget">
+			<p class="prefix-container">
+				<label>PREFIX_LABEL</label>
+				<s:SecurityLabelPartListBox ui:field="prefixListBox"></s:SecurityLabelPartListBox>
+			</p>
+			<p class="protective-marking-container">
+				<label>PROTECTIVE_MARKING_LABEL</label>
+				<s:SecurityLabelPartListBox ui:field="protectiveMarkingListBox"></s:SecurityLabelPartListBox>
+			</p>
+			<p class="caveats-container" ui:field="caveatsContainer">
+				<label>CAVEATS_LABEL</label>
+				<s:SecurityLabelPartListBox ui:field="caveatListBox"></s:SecurityLabelPartListBox>
+			</p>
+			<p class="open-groups-container" ui:field="openGroupsContainer">
+				<label>OPEN_GROUPS_LABEL</label>
+				<g:FlowPanel ui:field="groupsList" styleName="list"></g:FlowPanel>
+			</p>
+			<p class="security-label-container">
+				<security:SecurityLabelWidget ui:field="securityLabelWidget"></security:SecurityLabelWidget>
+			</p>
+		</div>
+	</g:HTMLPanel>
+</ui:UiBinder> 

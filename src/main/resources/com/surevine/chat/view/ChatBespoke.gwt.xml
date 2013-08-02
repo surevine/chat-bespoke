@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.3.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.3.0/distro-source/core/src/gwt-module.dtd">
+<module rename-to="chatclient">
+	<inherits name="com.google.gwt.user.User" />
+	<inherits name="com.google.gwt.i18n.I18N" />
+	<inherits name="com.google.gwt.inject.Inject" />
+
+	<inherits name='com.calclab.emite.core.EmiteCore' />
+	<inherits name='com.calclab.emite.im.EmiteIM' />
+	<inherits name='com.calclab.emite.xep.storage.EmitePrivateStorage' />
+	<inherits name='com.calclab.hablar.core.HablarCore' />
+	<inherits name='com.calclab.hablar.roster.HablarRoster' />
+	<inherits name='com.calclab.hablar.search.HablarSearch' />
+	<inherits name='com.calclab.hablar.editbuddy.HablarEditBuddy' />
+	<inherits name='com.calclab.hablar.openchat.HablarOpenChat' />
+	<inherits name='com.calclab.hablar.dock.HablarDock' />
+	<inherits name='com.calclab.hablar.user.HablarUser' />
+	<inherits name='com.calclab.hablar.vcard.HablarVCard' />
+	<inherits name='com.calclab.hablar.groupchat.HablarGroupChat' />
+	<inherits name='com.calclab.hablar.rooms.HablarRooms' />
+	<inherits name='com.calclab.hablar.clipboard.HablarClipboard' />
+	<inherits name='com.calclab.hablar.usergroups.HablarUserGroups' />
+	<inherits name='com.calclab.hablar.group.HablarGroup' />
+	<inherits name='com.calclab.hablar.signals.HablarSignals' />
+	<inherits name='com.calclab.hablar.console.HablarConsole' />
+	<inherits name='com.calclab.hablar.icons.HablarIcons' />
+	<inherits name='com.calclab.hablar.Hablar' />
+
+	<inherits name='com.surevine.chat.view.ChatClientLib' />
+
+	<inherits name='com.google.gwt.user.theme.chrome.Chrome' />
+	<!-- <inherits name='com.google.gwt.user.theme.standard.Standard' /> -->
+	<!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/> -->
+
+	<inherits name="com.surevine.chat.common.ChatCommonXMPP" />
+
+	<inherits name="com.google.gwt.user.Debug" />
+
+	<!-- Set up the remote logging -->
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-OFF" />
+	<inherits name="com.allen_sauer.gwt.log.gwt-log-RemoteLogger" />
+	<set-property name="log_DivLogger" value="DISABLED" />
+	<set-property name="log_GWTLogger" value="DISABLED" />
+	<set-property name="log_WindowLogger" value="DISABLED" />
+
+	<extend-property name="log_level" values="DEBUG" />
+	<set-property name="log_level" value="DEBUG" />
+
+	<!-- Define a property which will enable/disable the use of the Alpha filter 
+		to display transparent PNG's in IE6. Note that the output of this will have 
+		no effect in any browser other than IE6/7 -->
+	<define-property name="chatclient.enableIE6Filter"
+		values="true, false" />
+
+	<property-provider name="chatclient.enableIE6Filter"
+		generator="com.surevine.chat.view.linker.IE6ImagePropertyProviderGenerator" />
+
+	<!-- Override the default IE6 implementation of ClippedImage. This is so 
+		we can control whether the AlphaImageLoader PNG hack is loaded as this seems 
+		to cause problems with a Citrix environment -->
+	<replace-with class="com.google.gwt.user.client.ui.impl.ClippedImageImpl">
+		<all>
+			<when-type-is class="com.google.gwt.user.client.ui.impl.ClippedImageImpl" />
+			<when-property-is name="user.agent" value="ie6" />
+			<when-property-is name="chatclient.enableIE6Filter"
+				value="false" />
+		</all>
+	</replace-with>
+
+	<!-- Fix for CHAT-215. Provides a different notifier popup implementation 
+		to get around a document.domain bug. -->
+	<replace-with
+		class="com.surevine.chat.view.client.signals.notifications.IEBrowserPopupHablarNotifier">
+		<all>
+			<when-type-is
+				class="com.calclab.hablar.signals.client.notifications.BrowserPopupHablarNotifier" />
+			<any>
+				<when-property-is name="user.agent" value="ie6" />
+				<when-property-is name="user.agent" value="ie8" />
+				<when-property-is name="user.agent" value="ie9" />
+			</any>
+		</all>
+	</replace-with>
+
+	<source path="client" />
+	<entry-point class="com.surevine.chat.view.client.ChatBespokeEntryPoint" />
+</module>

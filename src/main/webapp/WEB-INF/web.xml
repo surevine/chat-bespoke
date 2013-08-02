@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+   http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+	<!-- F I L T E R S -->
+
+	<filter>
+		<filter-name>URL Rewrite Filter</filter-name>
+		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
+		<init-param>
+			<param-name>statusEnabledOnHosts</param-name>
+			<param-value>localhost, ${chat.server}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>logLevel</param-name>
+			<param-value>WARN</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>${cas.protocol}://${cas.server}${cas.port}/${cas.context.url}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>${chat.protocol}://${chat.server}${chat.port}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowAnyProxy</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>proxyCallbackUrl</param-name>
+			<param-value>${chat.protocol}://${chat.server}${chat.port}/chat/proxyCallback</param-value>
+		</init-param>
+		<init-param>
+			<param-name>proxyReceptorUrl</param-name>
+			<param-value>/proxyCallback</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+		<init-param>
+			<param-name>casServerLoginUrl</param-name>
+			<param-value>${cas.protocol}://${cas.server}${cas.port}/cas/login</param-value>
+		</init-param>
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>${chat.protocol}://${chat.server}${chat.port}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>renew</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>gateway</param-name>
+			<param-value>false</param-value>
+		</init-param>
+	</filter>
+
+	<filter>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.HttpServletRequestWrapperFilter</filter-class>
+	</filter>
+
+	<filter>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+	</filter>
+	
+	<!--
+	Disabled on the basis that CAS may do this for us
+	<filter>
+        <filter-name>Group Authorisation Filter</filter-name>
+        <filter-class>com.surevine.chat.auth.GroupAuthorisationFilter</filter-class>
+        <init-param>
+            <param-name>connectDistinguisedName</param-name>
+            <param-value>${ldap.connect.dn}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>connectPassword</param-name>
+            <param-value>${ldap.connect.password}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>LdapHostname</param-name>
+            <param-value>${ldap.host.name}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>rootContext</param-name>
+            <param-value>${ldap.root.context}</param-value>
+        </init-param>
+        <init-param>
+            <param-name>groupName</param-name>
+            <param-value>${ldap.group.name}</param-value>
+        </init-param>
+    </filter>
+	-->
+	<filter-mapping>
+		<filter-name>URL Rewrite Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</filter-mapping>
+	
+	<!--  Disabled as per above
+	<filter-mapping>
+	   <filter-name>Group Authorisation Filter</filter-name>
+	   <url-pattern>/*</url-pattern>
+	</filter-mapping>
+-->
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS Authentication Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>/proxyCallback</url-pattern>
+	</filter-mapping>
+
+	<!-- S E R V L E T S -->
+
+	<servlet>
+		<servlet-name>configurationServiceServlet</servlet-name>
+		<servlet-class>com.surevine.chat.view.server.configuration.ConfigurationServiceImpl</servlet-class>
+		<init-param>
+			<param-name>com.surevine.chatclient.jabberHost</param-name>
+			<param-value>${xmpp.server}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.surevine.chatclient.jabberConferenceHost</param-name>
+			<param-value>conference.${xmpp.server}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.surevine.chatclient.boshUrl</param-name>
+			<param-value>/proxy</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.surevine.chatclient.spaceProtocol</param-name>
+			<param-value>${space.protocol}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.surevine.chatclient.spaceHost</param-name>
+			<param-value>${space.server}</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>credentialsServiceServlet</servlet-name>
+		<servlet-class>com.surevine.chat.view.server.authentication.CredentialServiceImpl</servlet-class>
+		<init-param>
+			<param-name>com.surevine.chatclient.server.authentication.serviceUrl</param-name>
+			<param-value>${chat.protocol}://${chat.server}${chat.port}/${chat.context.url}</param-value>
+		</init-param>
+		<init-param>
+			<param-name>com.surevine.chatclient.server.authentication.casServerLoginUrl</param-name>
+			<param-value>${cas.protocol}://${cas.server}${cas.port}/cas/login</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>remoteLoggerServiceImpl</servlet-name>
+		<servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
+	</servlet>
+
+	<!-- S E R V L E T   M A P P I N G S -->
+
+	<servlet-mapping>
+		<servlet-name>configurationServiceServlet</servlet-name>
+		<url-pattern>/chatclient/configurationService</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>credentialsServiceServlet</servlet-name>
+		<url-pattern>/chatclient/credentialService</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>remoteLoggerServiceImpl</servlet-name>
+		<url-pattern>/chatclient/gwt-log</url-pattern>
+	</servlet-mapping>
+
+	<!-- Increase the session timeout to 1 day -->
+	<session-config>
+        <session-timeout>1440</session-timeout>
+    </session-config>
+
+	<error-page>
+		<exception-type>java.lang.Throwable</exception-type>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Bad Request -->
+		<error-code>400</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Unauthorized -->
+		<error-code>401</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Payment Required -->
+		<error-code>402</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Forbidden -->
+		<error-code>403</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Not Found -->
+		<error-code>404</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Method Not Allowed -->
+		<error-code>405</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Not Acceptable -->
+		<error-code>406</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Proxy Authentication Required -->
+		<error-code>407</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Request Timeout -->
+		<error-code>408</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Conflict -->
+		<error-code>409</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Gone -->
+		<error-code>410</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Length Required -->
+		<error-code>411</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Precondition Failed -->
+		<error-code>412</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Request Entity Too Large -->
+		<error-code>413</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Request-URI Too Long -->
+		<error-code>414</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Unsupported Media Type -->
+		<error-code>415</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Requested Range Not Satisfiable -->
+		<error-code>416</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Expectation Failed -->
+		<error-code>417</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- I'm a teapot -->
+		<error-code>418</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- There are too many connections from your internet address -->
+		<error-code>421</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Unprocessable Entity (WebDAV) (RFC 4918) -->
+		<error-code>422</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Locked (WebDAV) (RFC 4918) -->
+		<error-code>423</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Failed Dependency (WebDAV) (RFC 4918) -->
+		<error-code>424</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Unordered Collection (RFC 3648) -->
+		<error-code>425</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Upgrade Required (RFC 2817) -->
+		<error-code>426</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Retry With -->
+		<error-code>449</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Blocked by Windows Parental Controls -->
+		<error-code>450</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Internal Server Error -->
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Not Implemented -->
+		<error-code>501</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Bad Gateway -->
+		<error-code>502</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Service Unavailable -->
+		<error-code>503</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Gateway Timeout -->
+		<error-code>504</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- HTTP Version Not Supported -->
+		<error-code>505</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Variant Also Negotiates (RFC 2295) -->
+		<error-code>506</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Insufficient Storage (WebDAV) (RFC 4918) -->
+		<error-code>507</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Bandwidth Limit Exceeded (Apache bw/limited extension) -->
+		<error-code>509</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- Not Extended (RFC 2774) -->
+		<error-code>510</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	<error-page>
+		<!-- User access denied -->
+		<error-code>530</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+</web-app>

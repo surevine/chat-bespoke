@@ -1,0 +1,22 @@
+<!DOCTYPE html">
+<html>
+<head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <script type="text/javascript">
+                var i = location.href.lastIndexOf("d=");
+                if(i > -1) {
+                        var domain = location.href.substr(i + 2);
+                        document.domain = domain;       
+                }
+
+                if(opener && opener.window
+                	&& opener.window.browserPopupHablarNotifierCallback) {
+                	opener.window.browserPopupHablarNotifierCallback();
+                } else {
+                	window.close();
+                }
+        </script>
+</head>
+<body>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+  	<meta http-equiv="X-UA-Compatible" content="IE=7" >
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  
+<!--    <meta id="emite.autoConfig" content="false" />-->
+    <meta name="emite.httpBase" content="${xmpp.base}" />
+    <meta name="emite.host" content="${xmpp.server}" />
+    <meta name="emite.searchHost" content="search.${xmpp.server}" />  
+    <meta name="emite.bosh.wait" content="30" />
+   
+	<meta name="hablar.roomService" content="conference.${xmpp.server}" />
+
+	<meta name="hablar.vcard.read-only" content="true" />
+
+    <meta name="hablar.login" content="false" />
+    <meta name="hablar.roster" content="true" />
+    <meta name="hablar.dockRoster" content="left" />
+    
+    <meta name="hablar.layout" content="tabs" />    
+    <meta name="hablar.inline" content="horizontal_div" />
+    <meta name="hablar.width" content="100%" />
+    <meta name="hablar.height" content="100%" />          
+
+    <meta name="hablar.enableEmoticons" content="false" />
+    <meta name="hablar.avatarProvider" content="space" />
+    
+    <!-- Hide certain users from the roster. Multiple users can be specified separated by colons ':' -->
+    <meta name="chatclient.hideusers" content="${chatclient.hideusers}" />
+    
+	<script language="javascript" type="text/javascript">
+      
+      function getQueryParams(qs) {
+          qs = qs.split("+").join(" ");
+      
+          var params = {}, tokens,
+          re = /[?&]?([^=]+)=([^&]*)/g;
+      
+          while (tokens = re.exec(qs)) {
+          params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+       }
+        
+       return params;
+      }
+      
+      var params = getQueryParams(document.location.search);
+      if (params.jid != 'undefined') {
+         var onGwtReady = function() {
+        	window.rosterAction(params.jid); 
+         };
+      }
+      
+     </script>
+     
+    
+	<script type="text/javascript" language="javascript">
+	<!--
+		// The following array will be matched against the user agent string.
+		// If one of the entries if found in the User Agent string (lowercase)
+		// then the AlphaImageLoader PNG fix will be disabled in IE6.
+		disableIE6PNGFixUAs = [ "windows nt 5.2" ];
+		
+		// Whether to use the IE6 AlphaImageLoader PNG Fix.
+		disableIE6PNGFix = false;
+	// -->
+	</script>
+	    
+    <title>Chat</title>
+    
+    <script type="text/javascript" language="javascript" src="chatclient/chatclient.nocache.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="Hablar.css">
+    <link type="text/css" rel="stylesheet" href="chatclient.css">
+  <!--[if IE 6]>
+    <link type="text/css" rel="stylesheet" href="ie6.css">
+    <link type="text/css" rel="stylesheet" href="chatclient-ie6.css">
+<![endif]-->
+  </head>
+  <body>
+
+    <iframe src="javascript:''" id="__gwt_historyFrame" tabIndex='-1' style="position:absolute;width:0;height:0;border:0"></iframe>
+    
+    <noscript>
+      <div style="width: 22em; position: absolute; left: 50%; margin-left: -11em; color: red; background-color: white; border: 1px solid red; padding: 4px; font-family: sans-serif">
+        Your web browser must have JavaScript enabled
+        in order for this application to display correctly.
+      </div>
+    </noscript>
+
+    <div id="chatclient_container"></div>
+    
+  </body>
+</html>

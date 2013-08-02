@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.1//EN" "http://tuckey.org/res/dtds/urlrewrite3.1.dtd">
+<urlrewrite>
+	<rule>
+		<note>Set no-cache for all the *nocache* files</note>
+		<from>.*nocache.*</from>
+		<set type="response-header" name="Cache-Control">no-cache</set>
+		<set type="response-header" name="Cache-Control">no-store</set>
+	</rule>
+	<rule>
+		<note>Set no-cache for the index.html file</note>
+		<from>^/index\.html</from>
+		<set type="response-header" name="Cache-Control">no-cache</set>
+		<set type="response-header" name="Cache-Control">no-store</set>
+	</rule>
+	<outbound-rule encode-first="true">
+		<name>Strip outgoing URL Session ID's</name>
+		<note>
+			Strip ;jsessionid=XXX from urls passed through
+			response.encodeURL().
+			The characters ? and # are the only things we can use to
+			find out where the jsessionid ends.
+			The expression in 'from' below contains three capture
+			groups, the last two being optional.
+			1, everything before ;jsessionid
+			2, everything after ;jsessionid=XXX starting with a ?
+			(to get the query string) up to #
+			3, everything ;jsessionid=XXX and optionally ?XXX
+			starting with a # (to get the target)
+			eg,
+			from index.jsp;jsessionid=sss?qqq to index.jsp?qqq
+			from index.jsp;jsessionid=sss?qqq#ttt to index.jsp?qqq#ttt
+			from index.jsp;jsessionid=asdasdasdsadsadasd#dfds -
+			index.jsp#dfds
+			from u.jsp;jsessionid=wert.hg - u.jsp
+			from /;jsessionid=tyu - /
+    	</note>
+		<from>^(.*?)\;jsessionid=[^\?#]*(\?[^#]*)?(#.*)?$</from>
+		<to>$1$2$3</to>
+	</outbound-rule>
+	<rule>
+		<name>Disallow session via url</name>
+		<note>
+			Strip ;jsession=XXX from incoming urls.
+			The characters ? and # are the only things we can use to
+			find out where the jsessionid ends.
+			The expression in 'from' below contains three capture
+			groups, the last two being optional.
+			1, everything before ;jsessionid
+			2, everything after ;jsessionid=XXX starting with a ?
+			(to get the query string) up to #
+			3, everything ;jesessionid=XXX and optionally ?XXX
+			starting with a # (to get the target)
+			eg,
+			from index.jsp;jsessionid=sss?qqq to index.jsp?qqq
+			from index.jsp;jsessionid=sss?qqq#ttt to index.jsp?qqq#ttt
+			from index.jsp;jsessionid=asdasdasdsadsadasd#dfds -
+			index.jsp#dfds
+			from u.jsp;jsessionid=wert.hg - u.jsp
+			from /;jsessionid=tyu - /
+    	</note>
+		<condition type="requested-session-id-from-url" operator="equal">true</condition>
+		<from>^(.*?)(?:\;jsessionid=[^\?#]*)?(\?[^#]*)?(#.*)?$</from>
+		<to type="permanent-redirect">$1$2$3</to>
+	</rule>
+</urlrewrite>

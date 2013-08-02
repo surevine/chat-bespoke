@@ -1,0 +1,22 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
+	<ui:style>
+		.labelContainer {
+			display: block;
+			text-align: center;
+			border: none;
+		}
+		
+		.label {
+			font-face: arial, verdana, helvetica, sans-serif;
+			text-align: center;
+			padding: 0px 5px;
+		}
+	</ui:style>
+	<g:HTML>
+		<div class="{style.labelContainer}">
+			<div ui:field="label" class="{style.label}"></div>
+		</div>
+	</g:HTML>
+</ui:UiBinder>

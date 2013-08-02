@@ -1,0 +1,13 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+    xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:hablar="urn:import:com.calclab.hablar.core.client">
+    <ui:with type="com.calclab.hablar.icons.client.IconsBundle" field="res" />
+    <g:HTMLPanel addStyleNames="chatClientWidget">
+    	<div class="body">
+    		<div class="hablar"><hablar:HablarWidget ui:field="hablar"></hablar:HablarWidget></div>
+    	</div>
+    	<div class="footer" ui:field="footer">
+    		<div class="status"><g:Image resource="{res.loadingIcon}" addStyleNames="icon" /> <g:Label ui:field="state" /></div>
+    	</div>
+    </g:HTMLPanel>
+</ui:UiBinder> 

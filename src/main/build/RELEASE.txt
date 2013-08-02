@@ -1,0 +1,31 @@
+#
+# Chat Release Note
+#
+
+Release 1.2.0
+
+Release Name
+ELIM 
+
+Description
+This release resolved 6 bugs and made 1 improvement. 
+
+Improvements
+
+ID  		Description  										Priority  
+CHAT-69		Timestamped messages  								Major
+
+
+Bugs Resolved
+
+ID  Description  Priority  
+CHAT-60  	Web.xml produced by build process needs tweaking
+			to work on customer environment  					Critical  
+CHAT-56  	User is not notified if membership of group chat
+			changes												Major  
+CHAT-36  	Transparencies look rubbish in IE6  				Trivial  
+CHAT-65  	Chat logo is being cut off halfway  				Minor  
+CHAT-49  	Securiy label rules  								Minor  
+CHAT-35  	Time taken to recognise the other party has
+			closed the browser and left the conversation is
+			too long  											Trivial  

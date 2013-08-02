@@ -1,0 +1,131 @@
+.hablar-ManageGroupsWidget img {
+	float: left;
+}
+
+.hablar-OccupantWidget img {
+	float: left;
+}
+html, .chatClientWidget, .chatClientWidget .body {
+	height: 100%;
+}
+body {
+	background-color: #FFFFFF;
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif !important;
+	height: 100%;
+}
+
+textarea {
+	font-family: Tahoma, Verdana, Arial, Helvetica, sans-serif;
+	font-size: small;
+}
+
+#chatclient_container {
+	width: 100%;
+	height: 100%;
+	text-align: left;
+}
+
+#chatclient_container .footer {
+	position: absolute;
+	right: 2px;
+	bottom: 2px;
+	border: 1px solid black;
+	background: white;
+	padding: 2px 4px;
+	display: none;
+	z-index: 1;
+	white-space: nowrap;
+}
+
+#chatclient_container .footer .status .icon {
+	vertical-align: middle;
+}
+
+#chatclient_container .footer .status .gwt-Label {
+	display: inline;
+}
+
+#chatclient_container .hablar {
+	margin: 0;
+	border: none;
+	background-color: #E9E9E9;
+	height: 100%;
+	position: relative;
+}
+
+/* STYLING */
+.hablar-RosterDockContainer-top {
+    background-color: #FBC110;
+}
+
+.DockHeaderWidget-user-dock {
+    background: #FBC110 url('images/chat_logo.png') no-repeat top right;
+    border: 1px solid #FBC110;
+}
+
+.hablar-lightColor {
+	color: #999999;
+}
+
+.hablar-mediumColor {
+	color: #666666;
+}
+
+.hablar {
+	height: inherit;
+}
+
+.open-groups-container .hablar-OpenGroupMarkingWidget {
+	clear: left;
+}
+
+.open-groups-container .hablar-OpenGroupMarkingWidget .select {
+	float: left;
+	margin-right: 1em;
+}
+
+.hablar-Overlay h2 {
+	margin-top: 0 !important;
+}
+
+.hablar-ChangeClassificationButton {
+	float: left;
+	margin-right: 5px;
+	height: 24px;
+}
+
+.gwt-TabLayoutPanelTab {
+	border-top: #ffffff solid 1px;
+	border-left: #ffffff solid 1px;
+	border-right: #cccccc solid 1px;
+	padding: 0 !important;
+	font-weight: normal !important;
+}
+
+.hablar-TabsHeaderWidget {
+	padding: 2px 5px;
+}
+
+.hablar-TabsHeaderWidget .title {
+	margin: 0;
+}
+
+.hablar-RosterItemWidget .gwt-Label.name, .hablar-RosterItemWidget .gwt-Label.hablar-lightColor {
+	white-space: nowrap;
+}
+
+/** Security Label Chooser **/
+.hablar-SecurityLabelChooserWidget .list {
+    margin: 5px;
+}
+
+.hablar-SecurityLabelChooserWidget .security-label-container {
+	margin: 5px 0;
+	width: 98%;
+	border: 2px solid #666666;
+}
+
+.chatMessage span {
+	float: none !important;
+	display: inline !important;
+}
