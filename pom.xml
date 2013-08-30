@@ -10,13 +10,11 @@
 		<dependency>
 			<groupId>com.surevine.chat</groupId>
 			<artifactId>client</artifactId>
-			<version>1.11.0-SNAPSHOT</version>
 			<classifier>sources</classifier>
 		</dependency>
 		<dependency>
 			<groupId>com.surevine.chat</groupId>
 			<artifactId>client</artifactId>
-			<version>1.11.0-SNAPSHOT</version>
 			<classifier>classes</classifier>
 		</dependency>
 		<dependency>
@@ -94,26 +92,6 @@
 		</filters>
 		<plugins>
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<module>com.surevine.chat.view.ChatClient</module>
-						</configuration>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<soyc>false</soyc>
-					<style>OBF</style>
-					<inplace>true</inplace>
-					<force>true</force>
-				</configuration>
-			</plugin>
-			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<configuration>
@@ -143,26 +121,6 @@
 							</includes>
 						</resource>
 					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.maven.plugin</groupId>
-				<artifactId>emma-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>instrument</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<classesDirectory>${project.build.directory}/generated-classes/emma/classes
-					</classesDirectory>
 				</configuration>
 			</plugin>
 
@@ -237,7 +195,6 @@
 					<enableAssertions>false</enableAssertions>
 					<draftCompile>false</draftCompile>
 					<runTarget>index.html</runTarget>
-					<logLevel>DEBUG</logLevel>
 				</configuration>
 			</plugin>
 		</plugins>
