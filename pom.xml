@@ -1,3 +1,19 @@
+<!--
+  Copyright (C) 2010 Surevine Limited
+  
+  This program is free software; you can redistribute it and/or
+  modify it under the terms of the GNU General Public License
+  as published by the Free Software Foundation; either version 2
+  of the License, or (at your option) any later version.
+  
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+  
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see {http://www.gnu.org/licenses/}.
+-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
@@ -10,13 +26,11 @@
 		<dependency>
 			<groupId>com.surevine.chat</groupId>
 			<artifactId>client</artifactId>
-			<version>1.11.0-SNAPSHOT</version>
 			<classifier>sources</classifier>
 		</dependency>
 		<dependency>
 			<groupId>com.surevine.chat</groupId>
 			<artifactId>client</artifactId>
-			<version>1.11.0-SNAPSHOT</version>
 			<classifier>classes</classifier>
 		</dependency>
 		<dependency>
@@ -88,31 +102,7 @@
 
 	<!-- B U I L D C O N F I G U R A T I O N -->
 	<build>
-		<filters>
-			<filter>${basedir}/src/main/filters/filter-${chat.build.type}.properties
-			</filter>
-		</filters>
 		<plugins>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>gwt-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<configuration>
-							<module>com.surevine.chat.view.ChatClient</module>
-						</configuration>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<soyc>false</soyc>
-					<style>OBF</style>
-					<inplace>true</inplace>
-					<force>true</force>
-				</configuration>
-			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
@@ -143,26 +133,6 @@
 							</includes>
 						</resource>
 					</webResources>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.sonatype.maven.plugin</groupId>
-				<artifactId>emma-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>process-classes</phase>
-						<goals>
-							<goal>instrument</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<configuration>
-					<classesDirectory>${project.build.directory}/generated-classes/emma/classes
-					</classesDirectory>
 				</configuration>
 			</plugin>
 
@@ -237,7 +207,6 @@
 					<enableAssertions>false</enableAssertions>
 					<draftCompile>false</draftCompile>
 					<runTarget>index.html</runTarget>
-					<logLevel>DEBUG</logLevel>
 				</configuration>
 			</plugin>
 		</plugins>
@@ -258,12 +227,6 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
-			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-surefire-report-plugin</artifactId> 
-				<reportSets> <reportSet> <id>integration-tests</id> <reports> <report>report-only</report> 
-				</reports> <configuration> <outputName>failsafe-report</outputName> <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory> 
-				</configuration> </reportSet> <reportSet> <id>unit-tests</id> <reports> <report>report-only</report> 
-				</reports> <configuration> <outputName>surefire-report</outputName> <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory> 
-				</configuration> </reportSet> </reportSets> </plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-report-plugin</artifactId>
@@ -274,21 +237,6 @@
 					</reportsDirectories>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-checkstyle-plugin</artifactId>
-				<configuration>
-					<configLocation>checkstyle/surevine_checks.xml</configLocation>
-					<headerLocation>license/LICENSE.txt</headerLocation>
-					<linkXRef>false</linkXRef>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>findbugs-maven-plugin</artifactId>
-			</plugin>
-			<!-- <plugin> <groupId>org.sonatype.maven.plugin</groupId> <artifactId>emma-maven-plugin</artifactId> 
-				</plugin> -->
 		</plugins>
 	</reporting>
 </project>
