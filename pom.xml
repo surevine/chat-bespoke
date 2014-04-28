@@ -97,11 +97,15 @@
 	<parent>
 		<groupId>com.surevine.chat</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.12.0-SNAPSHOT</version>
+		<version>1.11.0</version>
 	</parent>
 
 	<!-- B U I L D C O N F I G U R A T I O N -->
 	<build>
+		<filters>
+			<filter>${basedir}/src/main/filters/filter-rel.properties
+			</filter>
+		</filters>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
