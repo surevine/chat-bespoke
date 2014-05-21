@@ -237,7 +237,7 @@ public class ChatClientPresenter {
 
             public void onSuccess(final UserCredentials result) {
                 final XmppURI xmppUri = XmppURI
-                        .uri(result.getUsername(), configuration
+                        .uri_or_null(result.getUsername(), configuration
                                 .get("com.surevine.chatclient.jabberHost"),
                                 null);
 
